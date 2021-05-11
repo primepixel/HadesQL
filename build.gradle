@@ -51,6 +51,7 @@ dependencies {
 
     // GraphQl
     implementation "com.apurebase:kgraphql:$kgraphql_version"
+    implementation "com.apurebase:kgraphql-ktor:$kgraphql_version"
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
