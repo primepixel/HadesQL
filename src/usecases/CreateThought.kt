@@ -5,7 +5,7 @@ import io.aethibo.entities.response.Thought
 import io.aethibo.repositories.MainRepository
 
 interface CreateThoughtUseCase {
-    suspend operator fun invoke(draft: ThoughtDraft): Thought
+    suspend operator fun invoke(draft: ThoughtDraft): Thought?
 }
 
 class CreateThoughtUseCaseImpl(private val repository: MainRepository) : CreateThoughtUseCase {

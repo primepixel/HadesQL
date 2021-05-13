@@ -58,7 +58,7 @@ class InMemoryRepository : MainRepository {
 
     override suspend fun getThought(id: String): Thought? = thoughts.firstOrNull { it.id == id }
 
-    override suspend fun createThought(draft: ThoughtDraft): Thought {
+    override suspend fun createThought(draft: ThoughtDraft): Thought? {
         val newThought = Thought(
             id = UUID.randomUUID().toString(),
             title = draft.title,
