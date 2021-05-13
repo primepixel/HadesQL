@@ -2,35 +2,19 @@ package io.aethibo.schema
 
 import com.apurebase.kgraphql.KGraphQL
 import com.apurebase.kgraphql.schema.Schema
-import com.apurebase.kgraphql.schema.dsl.SchemaBuilder
-import io.aethibo.entities.response.Thought
-import io.aethibo.usecases.GetThoughtUseCase
-import io.aethibo.usecases.GetThoughtsUseCase
-import io.aethibo.usecases.GetThoughtsUseCaseImpl
+import io.aethibo.entities.request.ThoughtDraft
+import io.aethibo.usecases.*
 import org.koin.java.KoinJavaComponent.inject
-
-fun SchemaBuilder.schemaValue() {
-
-    val getThoughts: GetThoughtsUseCase by inject(GetThoughtsUseCase::class.java)
-
-    query("getThoughts") {
-        description = "Get all thoughts"
-        resolver { ->
-            try {
-                getThoughts.invoke()
-            } catch (e: Exception) {
-                emptyList<Thought>()
-            }
-        }
-    }
-}
 
 object GraphQLSchema {
 
-    val schema: Schema = KGraphQL.schema {
+    private val getThoughts: GetThoughtsUseCase by inject(GetThoughtsUseCase::class.java)
+    private val getThought: GetThoughtUseCase by inject(GetThoughtUseCase::class.java)
+    private val createThought: CreateThoughtUseCase by inject(CreateThoughtUseCase::class.java)
+    private val updateThought: UpdateThoughtUseCase by inject(UpdateThoughtUseCase::class.java)
+    private val deleteThought: RemoveThoughtUseCase by inject(RemoveThoughtUseCase::class.java)
 
-        val getThoughts: GetThoughtsUseCase by inject(GetThoughtsUseCase::class.java)
-        val getThought: GetThoughtUseCase by inject(GetThoughtUseCase::class.java)
+    val schema: Schema = KGraphQL.schema {
 
         /**
          * Query in Postman
@@ -45,11 +29,7 @@ object GraphQLSchema {
         query("getThoughts") {
             description = "Get all thoughts"
             resolver { ->
-                try {
-                    getThoughts.invoke()
-                } catch (e: Exception) {
-                    emptyList<Thought>()
-                }
+                getThoughts.invoke()
             }
         }
 
@@ -59,11 +39,42 @@ object GraphQLSchema {
         query("getThought") {
             description = "Get thought based on its ID"
             resolver { id: String ->
-                try {
-                    getThought.invoke(id)
-                } catch (e: Exception) {
+                getThought.invoke(id)
+            }
+        }
 
+        /**
+         * Create thought
+         */
+        mutation("create") {
+            description = "Creates new thought"
+            resolver { title: String, content: String ->
+                try {
+                    createThought.invoke(title, content)
+                    true
+                } catch (ex: Exception) {
+                    false
                 }
+            }
+        }
+
+        /**
+         * Update thought
+         */
+        mutation("updateThought") {
+            description = "Update existing thought"
+            resolver { id: String, title: String, content: String ->
+                updateThought.invoke(id, ThoughtDraft(title, content))
+            }
+        }
+
+        /**
+         * Remove thought
+         */
+        mutation("removeThought") {
+            description = "Remove thought"
+            resolver { id: String ->
+                deleteThought.invoke(id)
             }
         }
     }

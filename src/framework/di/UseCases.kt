@@ -6,7 +6,7 @@ import org.koin.dsl.module
 val useCasesModule = module {
     single<GetThoughtsUseCase> { GetThoughtsUseCaseImpl(get()) }
     single<GetThoughtUseCase> { GetThoughtUseCaseImpl(get()) }
-    single<AddThoughtUseCase> { AddThoughtUseCaseImpl(get()) }
+    single<CreateThoughtUseCase> { CreateThoughtUseCaseImpl(get()) }
     single<UpdateThoughtUseCase> { UpdateThoughtUseCaseImpl(get()) }
     single<RemoveThoughtUseCase> { RemoveThoughtUseCaseImpl(get()) }
 }

@@ -3,7 +3,7 @@ package io.aethibo.repositories
 import io.aethibo.entities.request.ThoughtDraft
 import io.aethibo.entities.response.Thought
 
-class DefaultMailRepository : MainRepository {
+class DefaultMainRepository : MainRepository {
 
     override suspend fun getAllThoughts(): List<Thought> {
         TODO("Not yet implemented")
@@ -13,7 +13,7 @@ class DefaultMailRepository : MainRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addThought(draft: ThoughtDraft): Thought? {
+    override suspend fun createThought(title: String, content: String) {
         TODO("Not yet implemented")
     }
 
