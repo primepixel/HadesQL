@@ -1,8 +1,8 @@
 package io.aethibo.schema
 
-import com.apurebase.kgraphql.KGraphQL
-import com.apurebase.kgraphql.schema.Schema
+import com.apurebase.kgraphql.schema.dsl.SchemaBuilder
 import io.aethibo.entities.request.ThoughtDraft
+import io.aethibo.entities.response.Thought
 import io.aethibo.usecases.*
 import org.koin.java.KoinJavaComponent.inject
 
@@ -14,17 +14,10 @@ object GraphQLSchema {
     private val updateThought: UpdateThoughtUseCase by inject(UpdateThoughtUseCase::class.java)
     private val deleteThought: RemoveThoughtUseCase by inject(RemoveThoughtUseCase::class.java)
 
-    val schema: Schema = KGraphQL.schema {
+    fun SchemaBuilder.schemaValue() {
 
         /**
-         * Query in Postman
-         *
-         * query {
-         *      getThoughts {
-         *          id, title, content, date
-         *      }
-         * }
-         *
+         * Get all thoughts
          */
         query("getThoughts") {
             description = "Get all thoughts"
@@ -34,7 +27,7 @@ object GraphQLSchema {
         }
 
         /**
-         * Query in Postman
+         * Get single thought
          */
         query("getThought") {
             description = "Get thought based on its ID"
@@ -44,17 +37,11 @@ object GraphQLSchema {
         }
 
         /**
-         * Create thought
+         * Create new thought
          */
         mutation("create") {
-            description = "Creates new thought"
-            resolver { title: String, content: String ->
-                try {
-                    createThought.invoke(title, content)
-                    true
-                } catch (ex: Exception) {
-                    false
-                }
+            resolver { draft: ThoughtDraft ->
+                createThought.invoke(draft)
             }
         }
 
@@ -76,6 +63,14 @@ object GraphQLSchema {
             resolver { id: String ->
                 deleteThought.invoke(id)
             }
+        }
+
+        inputType<ThoughtDraft> {
+            description = "The input of the thought without the identifier"
+        }
+
+        type<Thought> {
+            description = "Thought object with the attributes identifier, title, content, date"
         }
     }
 }

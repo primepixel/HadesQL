@@ -1,16 +1,14 @@
 package io.aethibo
 
+import com.apurebase.kgraphql.GraphQL
 import io.aethibo.framework.di.applicationModule
 import io.aethibo.framework.di.repositoriesModule
 import io.aethibo.framework.di.useCasesModule
-import io.aethibo.routes.getThoughts
-import io.aethibo.schema.GraphQLSchema
+import io.aethibo.schema.GraphQLSchema.schemaValue
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
-import io.ktor.routing.*
 import org.koin.ktor.ext.Koin
-import org.koin.ktor.ext.inject
 import org.koin.logger.SLF4JLogger
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -18,8 +16,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-
-    val graphQl: GraphQLSchema by inject()
 
     install(ContentNegotiation) {
         gson { setPrettyPrinting() }
@@ -30,8 +26,12 @@ fun Application.module(testing: Boolean = false) {
         modules(applicationModule, repositoriesModule, useCasesModule)
     }
 
-    install(Routing) {
-        getThoughts(graphQl)
+    install(GraphQL) {
+        useDefaultPrettyPrinter = true
+
+        endpoint = "thoughts"
+        playground = true
+        schema { schemaValue() }
     }
 }
 

@@ -13,7 +13,7 @@ class DefaultMainRepository : MainRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createThought(title: String, content: String) {
+    override suspend fun createThought(draft: ThoughtDraft): Thought {
         TODO("Not yet implemented")
     }
 
