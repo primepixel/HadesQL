@@ -12,7 +12,7 @@ object GraphQLSchema {
     private val getThought: GetThoughtUseCase by inject(GetThoughtUseCase::class.java)
     private val createThought: CreateThoughtUseCase by inject(CreateThoughtUseCase::class.java)
     private val updateThought: UpdateThoughtUseCase by inject(UpdateThoughtUseCase::class.java)
-    private val deleteThought: RemoveThoughtUseCase by inject(RemoveThoughtUseCase::class.java)
+    private val deleteThought: DeleteThoughtUseCase by inject(DeleteThoughtUseCase::class.java)
 
     fun SchemaBuilder.schemaValue() {
 
@@ -56,10 +56,10 @@ object GraphQLSchema {
         }
 
         /**
-         * Remove thought
+         * Delete thought
          */
-        mutation("removeThought") {
-            description = "Remove thought"
+        mutation("deleteThought") {
+            description = "Delete existing thought"
             resolver { id: String ->
                 deleteThought.invoke(id)
             }

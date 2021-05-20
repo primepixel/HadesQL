@@ -8,5 +8,5 @@ val useCasesModule = module {
     single<GetThoughtUseCase> { GetThoughtUseCaseImpl(get()) }
     single<CreateThoughtUseCase> { CreateThoughtUseCaseImpl(get()) }
     single<UpdateThoughtUseCase> { UpdateThoughtUseCaseImpl(get()) }
-    single<RemoveThoughtUseCase> { RemoveThoughtUseCaseImpl(get()) }
+    single<DeleteThoughtUseCase> { DeleteThoughtUseCaseImpl(get()) }
 }

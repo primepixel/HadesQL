@@ -71,7 +71,7 @@ class InMemoryRepository : MainRepository {
         return newThought
     }
 
-    override suspend fun removeThought(id: String): Boolean = thoughts.removeIf { it.id == id }
+    override suspend fun deleteThought(id: String): Boolean = thoughts.removeIf { it.id == id }
 
     override suspend fun updateThought(id: String, draft: ThoughtDraft): Boolean {
         val existingThought = thoughts.firstOrNull { it.id == id } ?: return false

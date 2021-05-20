@@ -7,6 +7,6 @@ interface MainRepository {
     suspend fun getAllThoughts(): List<Thought>
     suspend fun getThought(id: String): Thought?
     suspend fun createThought(draft: ThoughtDraft): Thought?
-    suspend fun removeThought(id: String): Boolean
+    suspend fun deleteThought(id: String): Boolean
     suspend fun updateThought(id: String, draft: ThoughtDraft): Boolean
 }

@@ -2,12 +2,12 @@ package io.aethibo.usecases
 
 import io.aethibo.repositories.MainRepository
 
-interface RemoveThoughtUseCase {
+interface DeleteThoughtUseCase {
     suspend operator fun invoke(id: String): Boolean
 }
 
-class RemoveThoughtUseCaseImpl(private val repository: MainRepository) : RemoveThoughtUseCase {
+class DeleteThoughtUseCaseImpl(private val repository: MainRepository) : DeleteThoughtUseCase {
 
     override suspend operator fun invoke(id: String): Boolean =
-        repository.removeThought(id)
+        repository.deleteThought(id)
 }

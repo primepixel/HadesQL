@@ -34,7 +34,7 @@ class DefaultMainRepository : MainRepository {
         else null
     }
 
-    override suspend fun removeThought(id: String): Boolean = dbQuery {
+    override suspend fun deleteThought(id: String): Boolean = dbQuery {
         val deletedRows: Int = Thoughts.deleteWhere { Thoughts.id eq id }
 
         deletedRows > 0
