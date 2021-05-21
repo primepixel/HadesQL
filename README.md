@@ -1,7 +1,7 @@
 # HadesQL
 
 HadesQL is backend written using Ktor and GraphQL. It's purpose is to demonstrate basic usages of CRUD operations on InMemory database / H2 database while using GraphQL.
-It can be used as standalone, or in conjunction with Hades backend which provides more functionality.
+It can be used as standalone, or in conjunction with [Hades](https://github.com/primepixel/Hades) backend which provides more functionality.
 
 ## Install
 
